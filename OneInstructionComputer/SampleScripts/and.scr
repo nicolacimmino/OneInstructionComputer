@@ -1,0 +1,21 @@
+
+;#a ______________-------------------______________
+;#b ______________________-------------------------
+;#y _________________________-----------___________
+
+#a a
+#b b
+#y y
+
+
+a:		0 a b		; Is a=0? if 1 check b
+		0 y +0		; Yes then y=0
+		1 +0 a		; Check again a
+
+b:		0 b set_y	; Is b=0? if 1 set y=1
+		0 y +0		; Yes then y=0
+		1 +0 a		; Check again a
+
+set_y:	1 y a		; y=1 and check again a
+		
+y:		0 +0 +0		; the output

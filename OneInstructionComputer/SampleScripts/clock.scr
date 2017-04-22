@@ -1,0 +1,8 @@
+
+#clk bit1
+
+bit1:   0 bit1 +2
+        1 bit1 +2
+		0 bit1 bit1
+		1 +0 bit1
+		

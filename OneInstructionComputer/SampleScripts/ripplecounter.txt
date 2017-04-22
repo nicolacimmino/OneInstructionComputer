@@ -1,0 +1,39 @@
+;
+; Two bits (b1, b2) ripple counter with data good (dg) output
+;	and enable (active low).
+;
+; Example capture:
+;
+;#b1 ------_________------______________________
+;#b2 ---------_______________-------------------
+;#dg __-________-_____-________-________________
+;#en ____________________________---------------      
+; 11---^ 
+; 00------------^ 
+; 01------------------^ 
+; 10---------------------------^ 
+;
+
+#capture b1 bit1
+#capture b2 bit2
+#capture dg dGood
+#capture en en
+
+start:  1 dGood +1	; Pulse data good
+        0 dGood +1
+
+en:     0 en +0		; Stay here if en=1
+				
+bit1:   0 bit1 +3	; Is bit1 1?
+        1 bit1 +1	; No, set it to 1
+		1 +0 start  ; Next cycle
+        0 bit1 +0   ; bit1 is 1, set to 0
+		1 +0 bit2	; Carry to bit 2
+				
+bit2:   0 bit2 +3	; Is bit2 1?
+        1 bit2 +1	; No, set it to 1	
+		1 +0 start	; Next cycle	
+		0 bit2 +0	; bit2 is 1, set to 0
+		1 +0 start  ; Last bit, drop carry
+
+dGood: 0 dGood +0	; Data good when set
